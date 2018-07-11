@@ -67,7 +67,7 @@ struct RSSFeedsViewModel{
     static func fetchRSSFeeds(_ feedsCompletionHandler:@escaping feedsCompletionHandler) {
         
         ///  Trailing closure syntax
-        RSSFeedsModel.getRSSFeedsModel(){
+        RSSFeedsModel.getRSSFeedsModel {
             (feedsModel:RSSFeedsModel?, error:Error?)-> Void in
             if let feedsModel = feedsModel{
                 RSSFeedsViewModel.shared.feedsModel = feedsModel
