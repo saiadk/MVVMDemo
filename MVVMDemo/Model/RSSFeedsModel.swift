@@ -25,7 +25,7 @@ extension RSSFeedsModel{
     static func getRSSFeedsModel(feedModelCompletionHandler:@escaping feedModelCompletionHandler){
         
         //Initilize requestable object useful in creating URLRequest
-        let requestObj = TopRatedAppsFeedsRequest()
+        let requestObj = FeedsRequest()
         
         //Invoke web service with the request configuration created
         NetworkOperation(withRequest: requestObj, completionHandler: { (response, error) -> Void in

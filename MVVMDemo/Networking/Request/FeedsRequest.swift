@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct TopRatedAppsFeedsRequest: Requestable {    
+
+/// RSS Feeds request generator
+struct FeedsRequest: Requestable {
     var URI = "https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/50/explicit.json"
     var httpMethod = HTTPMethod.get
 }
