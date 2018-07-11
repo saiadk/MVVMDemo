@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -37,7 +38,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Q52-3Y-09f">
-                                        <rect key="frame" x="5" y="5" width="365" height="657"/>
+                                        <rect key="frame" x="5" y="77" width="365" height="585"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9nA-Wt-cWp">
                                             <size key="itemSize" width="374" height="158"/>
@@ -122,17 +123,17 @@
                                     <constraint firstAttribute="bottom" secondItem="Q52-3Y-09f" secondAttribute="bottom" constant="5" id="ZVw-bk-9xl"/>
                                     <constraint firstAttribute="trailing" secondItem="Q52-3Y-09f" secondAttribute="trailing" constant="5" id="jPw-GX-JZB"/>
                                     <constraint firstItem="Q52-3Y-09f" firstAttribute="leading" secondItem="V8I-h9-D5o" secondAttribute="leading" constant="5" id="lg5-95-NSH"/>
-                                    <constraint firstItem="Q52-3Y-09f" firstAttribute="top" secondItem="V8I-h9-D5o" secondAttribute="top" constant="5" id="vAa-He-Et6"/>
+                                    <constraint firstItem="Q52-3Y-09f" firstAttribute="top" secondItem="V8I-h9-D5o" secondAttribute="topMargin" constant="5" id="vAa-He-Et6"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="V8I-h9-D5o" secondAttribute="trailing" id="5Xf-jB-kfL"/>
-                            <constraint firstItem="V8I-h9-D5o" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Jhr-SD-Udr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="V8I-h9-D5o" secondAttribute="trailing" id="5Xf-jB-kfL"/>
+                            <constraint firstItem="V8I-h9-D5o" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Jhr-SD-Udr"/>
                             <constraint firstItem="IbW-KF-mjU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="RF6-eg-uhG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="V8I-h9-D5o" secondAttribute="bottom" id="sb4-mu-Nt2"/>
-                            <constraint firstItem="V8I-h9-D5o" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="t4b-dd-ZOW"/>
+                            <constraint firstItem="V8I-h9-D5o" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-64" id="t4b-dd-ZOW"/>
                             <constraint firstItem="IbW-KF-mjU" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="z5A-gM-YCn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

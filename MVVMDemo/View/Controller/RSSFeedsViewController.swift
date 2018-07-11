@@ -215,7 +215,9 @@ extension RSSFeedsViewController: RSSFeedsViewModelDelegate {
         //Change toggle button title and change layout without reloading collection view
         let layoutFlipSideStyle:FeedsLayoutStyle = (feedsLayoutStyle == .list) ? .grid : .list
         collectionDisplayModeBarButton.title = layoutFlipSideStyle.rawValue
-        topRatedAppsCollectionView.setCollectionViewLayout(layout, animated: true)
+        topRatedAppsCollectionView.setCollectionViewLayout(layout, animated: true, completion: { status -> Void in
+            self.topRatedAppsCollectionView.setContentOffset(.zero, animated: true)
+        })
     }
 }
 
