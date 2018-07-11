@@ -21,6 +21,7 @@ class RSSFeedsViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var topRatedAppsCollectionView: UICollectionView!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var collectionDisplayModeBarButton: UIBarButtonItem!
     private var imageDownloadsInProgress = [IndexPath:Operation]()
     
@@ -82,6 +83,7 @@ class RSSFeedsViewController: UIViewController {
                     self.topRatedAppsCollectionView.reloadData()
                     self.collectionDisplayModeBarButton.isEnabled = !self.feedsViewModel.feedsList.isEmpty
                     self.showActivity = false
+                    self.refreshButton.isEnabled = true
                 }
             }else {
                 self.showActivity = false
@@ -89,10 +91,10 @@ class RSSFeedsViewController: UIViewController {
                     self.containerView.isHidden = true
                     self.statusLbl.text = self.feedsViewModel.appsNotFoundMsg
                     self.statusLbl.isHidden = false
+                    self.refreshButton.isEnabled = true
                 }
             }
         }
-
     }
     
     @IBAction func toggleCollectionViewDisplayMode(_ sender: Any) {
@@ -100,18 +102,23 @@ class RSSFeedsViewController: UIViewController {
     }
 
     @IBAction func refreshAppsList(_ sender: Any) {
+        //Disable refresh button until current refresh action completes
+        refreshButton.isEnabled = false
         loadAppsList()
     }
     
     private func downloadArtwork(withURL artworkURL:String, forAppAtIndexPath indexPath:IndexPath){
         
         //Check if image download is already in progress
-        if imageDownloadsInProgress[indexPath] == nil{
+        if imageDownloadsInProgress[indexPath] == nil &&
+            feedsViewModel.feedsList.count > 0 {
             
             //Nested function
             func updateImageInCellWith(indexPath:IndexPath){
                 DispatchQueue.main.async {
-                    self.topRatedAppsCollectionView.reloadItems(at: [indexPath])
+                    if self.feedsViewModel.feedsList.count > 0 {
+                        self.topRatedAppsCollectionView.reloadItems(at: [indexPath])
+                    }
                 }
             }
             
@@ -122,7 +129,7 @@ class RSSFeedsViewController: UIViewController {
             
             //Download feed icon image in background session downloadTask API. This will download image even in case of app crash / app sent to inactive state / system kills the app.
             let imgDownloadOperation = ImageDownloadOperation(withURL: artworkURL, completionHandler: {  (image, error) -> Void in
-                if let image = image{
+                if let image = image, self.feedsViewModel.feedsList.count > 0{
                     var feedModel = self.feedsViewModel.feedsList[indexPath.row]
                     feedModel.icon = image
                     self.feedsViewModel.feedsList[indexPath.row] = feedModel
@@ -224,10 +231,6 @@ extension RSSFeedsViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
-
-        if feedsViewModel.feedsList.count < indexPath.row{
-            return UICollectionViewCell()
-        }
         
         //Initialize app collection cell object with reuse identifier based on the display style preferred
         let appDetailsCell = collectionView.dequeueReusableCell(withReuseIdentifier: feedsViewModel.getFeedsLayoutStyle().reuseIdentifier, for: indexPath) as! AppDetailsListViewCell

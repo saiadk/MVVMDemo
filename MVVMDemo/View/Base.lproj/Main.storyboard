@@ -151,8 +151,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="jU2-JG-as4" id="Jha-uJ-KWO"/>
-                        <outlet property="collectionDisplayModeBarButton" destination="d4D-7r-DnL" id="GQ1-73-IGb"/>
+                        <outlet property="collectionDisplayModeBarButton" destination="d4D-7r-DnL" id="WPK-Vf-jyC"/>
                         <outlet property="containerView" destination="V8I-h9-D5o" id="jEE-Xx-fuF"/>
+                        <outlet property="refreshButton" destination="QNT-bt-9iI" id="HgT-d4-tlr"/>
                         <outlet property="statusLbl" destination="3kl-gn-lN5" id="8S9-Ou-YAq"/>
                         <outlet property="topRatedAppsCollectionView" destination="Q52-3Y-09f" id="tSZ-hp-7Vx"/>
                     </connections>
