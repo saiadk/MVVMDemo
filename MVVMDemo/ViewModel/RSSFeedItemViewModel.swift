@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+
+/// Feed cell view model
 struct RSSFeedItemViewModel {
     let name, artistName, artworkURL, releaseDate: String
     var icon: UIImage? = nil

@@ -141,7 +141,7 @@
                     <navigationItem key="navigationItem" id="RUH-mH-C3S">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="QNT-bt-9iI">
                             <connections>
-                                <action selector="refreshAppsList:" destination="BYZ-38-t0r" id="SmV-Wo-z7F"/>
+                                <action selector="refreshRSSFeeds:" destination="BYZ-38-t0r" id="3ey-k8-Zni"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Grid" id="d4D-7r-DnL">

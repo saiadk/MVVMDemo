@@ -10,6 +10,8 @@ import Foundation
 
 typealias feedsCompletionHandler = (Bool)-> Void
 
+
+/// Enumeration of collection view layout styles
 enum FeedsLayoutStyle:String{
     case list = "List"
     case grid = "Grid"
@@ -19,10 +21,14 @@ enum FeedsLayoutStyle:String{
     }
 }
 
+
+/// RSSFeedsViewModelDelegate
 protocol RSSFeedsViewModelDelegate: class{
     func feedsLayoutDidChanged(toType feedsLayoutStyle:FeedsLayoutStyle)
 }
 
+
+/// Feeds ViewModel
 struct RSSFeedsViewModel{
     
     // MARK - Stored & Computed Properties
@@ -46,24 +52,37 @@ struct RSSFeedsViewModel{
     public let appsNotFoundMsg = "☹️ No apps found!" /// Unicode emoji char
     public var feedsList = [RSSFeedItemViewModel]()
     
-    // MARK - Initialization
+
     
+    /// Allows to access current collection view layout style
+    ///
+    /// - Returns: FeedsLayoutStyle enumeration type selected
     public func getFeedsLayoutStyle()-> FeedsLayoutStyle{
         return feedsLayout
     }
     
+    
+    /// To initialize default layout style
     public mutating func initFeedsLayoutStyle(){
         feedsLayout = .list
     }
     
+    
+    /// Switches layout styles
     public mutating func toggleFeedsLayoutStyle(){
         feedsLayout = (feedsLayout == .list) ? .grid : .list
     }
     
+    
+    /// Flushes all feeds stored in model
     public mutating func resetFeedsList(){
         feedsList.removeAll()
     }
     
+    
+    /// Fetchees RSS feeds from model object
+    ///
+    /// - Parameter feedsCompletionHandler: (Bool)-> Void (Sends the status boolean flag)
     static func fetchRSSFeeds(_ feedsCompletionHandler:@escaping feedsCompletionHandler) {
         
         ///  Trailing closure syntax

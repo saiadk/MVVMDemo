@@ -8,17 +8,27 @@
 
 import UIKit
 
-
+//Image cache lasts till the app is not killed
 fileprivate let imageCache = NSCache<NSString, UIImage>()
 typealias imageDownloadCompletionHandler = (UIImage?, Error?)-> Void
 
 
+/// Downloads and cachesh image in background mode
 class ImageDownloadOperation: Operation, URLSessionDownloadDelegate {
     
+    
+    /// Properties
     let imageURL: String
     let completionHandler: (_ image: UIImage?, _ error: Error?) -> Void
     let timeoutInterval: TimeInterval
     
+    
+    /// Initializes ImageDownloadOperation object
+    ///
+    /// - Parameters:
+    ///   - imageURL: URL string of the image to download
+    ///   - timeoutInterval: Max download interval
+    ///   - completionHandler: Closure that passes either downloaded image / error
     init(withURL imageURL: String, timeoutInterval:TimeInterval = 8.0, completionHandler: @escaping imageDownloadCompletionHandler) {
         self.imageURL = imageURL
         self.timeoutInterval = timeoutInterval
@@ -27,6 +37,8 @@ class ImageDownloadOperation: Operation, URLSessionDownloadDelegate {
 
     }
     
+    
+    /// Entry point for image download operation
     override open func main() {
         
         //Check if image is already added to cache and try to reuse, if yes.
@@ -37,9 +49,12 @@ class ImageDownloadOperation: Operation, URLSessionDownloadDelegate {
             //Download image in background session with downloadTask API
             downloadImageInBackground(imageURL)
         }
-
     }
     
+    
+    /// Downloads image in background
+    ///
+    /// - Parameter imgURL: iamge URL string
     func downloadImageInBackground(_ imgURL:String) {
         
         let imgURL:URL! = URL(string: imgURL)
@@ -51,7 +66,8 @@ class ImageDownloadOperation: Operation, URLSessionDownloadDelegate {
     }
     
     
-    // MARK: - NSURLSessionDelegate
+    // MARK: - URLSessionDownloadDelegate methods
+    
     public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
         guard let _ = downloadTask.originalRequest?.url?.absoluteString else{

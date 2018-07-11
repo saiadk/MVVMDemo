@@ -9,12 +9,21 @@
 import UIKit
 typealias serviceCompletionHandler = (Data?, Error?)-> Void
 
+
+/// Allows to trigger a web service based on the request generator provided
 class NetworkOperation: Operation, URLSessionTaskDelegate {
 
     let request:Requestable
     let completionHandler: (_ response: Data?, _ error: Error?) -> Void
     let timeoutInterval: TimeInterval
     
+    
+    /// Initilizes NetworkOperation class
+    ///
+    /// - Parameters:
+    ///   - request: Request generator type that confirms Requestable protocol
+    ///   - timeoutInterval:  request/response Interval decides how long it should try hitting a request & getting response
+    ///   - completionHandler: Passes web service resutls
     init(withRequest request: Requestable, timeoutInterval:TimeInterval = 8.0, completionHandler: @escaping serviceCompletionHandler) {
         self.request = request
         self.timeoutInterval = timeoutInterval
@@ -22,6 +31,7 @@ class NetworkOperation: Operation, URLSessionTaskDelegate {
         super.init()
     }
     
+    /// Entry point for webservice operation
     override open func main() {
         
         guard let serviceURL = self.getServiceURL() else{
@@ -47,6 +57,10 @@ class NetworkOperation: Operation, URLSessionTaskDelegate {
         task.resume()
     }
     
+    
+    /// Returns service URL by adding query string to it from request generator if needed
+    ///
+    /// - Returns: Web service URL
     private func getServiceURL()->URL?{
         var serviceURL = request.URI
         if let queryStringDict = request.queryParams  {
@@ -56,6 +70,13 @@ class NetworkOperation: Operation, URLSessionTaskDelegate {
         return URL(string: serviceURL)
     }
     
+    
+    /// Returns session config object
+    ///
+    /// - Parameters:
+    ///   - timeout: timeoutIntervalForRequest
+    ///   - maxConnctionPerHost: httpMaximumConnectionsPerHost
+    /// - Returns: URLSessionConfiguration
     private func getSessionConfig(_ timeout:TimeInterval = 30.0, maxConnctionPerHost:Int = 10) -> URLSessionConfiguration {
         let sessionConfig = URLSessionConfiguration.ephemeral
         sessionConfig.timeoutIntervalForRequest = timeout
@@ -68,6 +89,12 @@ class NetworkOperation: Operation, URLSessionTaskDelegate {
         return sessionConfig;
     }
     
+    
+    
+    /// Returns NSMutableURLRequest object
+    ///
+    /// - Parameter serviceURL: Web service URL
+    /// - Returns: NSMutableURLRequest object
     private func getURLReqeust(withServiceURL serviceURL:URL) -> NSMutableURLRequest{
         
         //Create and configure request object with data provided through Requestable object
@@ -88,6 +115,10 @@ class NetworkOperation: Operation, URLSessionTaskDelegate {
         return requestObj
     }
     
+    
+    /// Retunrs web service request body
+    ///
+    /// - Returns: Body as Data object
     private func getRequestBodyData()->Data? {
         guard let bodyParams = request.bodyParams else {
             return nil

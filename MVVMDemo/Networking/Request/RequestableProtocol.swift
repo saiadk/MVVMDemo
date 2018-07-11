@@ -8,6 +8,13 @@
 
 import Foundation
 
+
+/// <#Description#>
+///
+/// - get: GET HTTP Method
+/// - post: POST HTTP Method
+/// - put: PUT HTTP Method
+/// - delete: DELETE HTTP Method
 enum HTTPMethod:String{
     case get = "GET"
     case post = "POST"
@@ -15,6 +22,8 @@ enum HTTPMethod:String{
     case delete = "DELETE"
 }
 
+
+/// Protocol that defines the interface to implement a class/struct that can act as a request generator
 protocol Requestable {
     var URI: String { get set }
     var httpMethod: HTTPMethod { get set }

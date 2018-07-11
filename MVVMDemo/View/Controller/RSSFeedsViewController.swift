@@ -10,6 +10,8 @@ import UIKit
 
 class RSSFeedsViewController: UIViewController {
 
+    //MARK: Store & Computed Properties
+    
     //ViewModel reference
     var feedsViewModel:RSSFeedsViewModel!{
         didSet{
@@ -57,17 +59,16 @@ class RSSFeedsViewController: UIViewController {
         feedsViewModel.initFeedsLayoutStyle()
         
         //Load top rated apps list from iTunes RSS API
-        loadAppsList()
+        loadRSSFeeds()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
+
     
     //MARK: Custom Functions
     
-    private func loadAppsList(){
+    
+    
+    /// Loads RSS feeds with the given preferences
+    private func loadRSSFeeds(){
         
         //Reset previously loaded apps
         feedsViewModel.resetFeedsList()
@@ -97,16 +98,31 @@ class RSSFeedsViewController: UIViewController {
         }
     }
     
+    
+    /// Toggles the feeds collectionview layout between list and grid styles
+    ///
+    /// - Parameter sender: UIBarButtonItem which invokes this function
     @IBAction func toggleCollectionViewDisplayMode(_ sender: Any) {
         feedsViewModel.toggleFeedsLayoutStyle()
     }
 
-    @IBAction func refreshAppsList(_ sender: Any) {
+    
+    /// Refreshes RSS feeds to pull latest changes in iTunes
+    ///
+    /// - Parameter sender: UIBarButtonItem which invokes this function
+    @IBAction func refreshRSSFeeds(_ sender: Any) {
         //Disable refresh button until current refresh action completes
         refreshButton.isEnabled = false
-        loadAppsList()
+        loadRSSFeeds()
     }
     
+    
+    
+    /// Dwonloads the feed's artwork image in background with downloadTask / dataTask (if changes made by uncommenting some code)
+    ///
+    /// - Parameters:
+    ///   - artworkURL: Feed's icon artwork image URL string
+    ///   - indexPath: Current RSS feed's cell view indexpath in collection view
     private func downloadArtwork(withURL artworkURL:String, forAppAtIndexPath indexPath:IndexPath){
         
         //Check if image download is already in progress
@@ -178,6 +194,8 @@ class RSSFeedsViewController: UIViewController {
 }
 
 
+
+// MARK: - UIScrollViewDelegate
 extension RSSFeedsViewController: UIScrollViewDelegate{
    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -202,6 +220,8 @@ extension RSSFeedsViewController: UIScrollViewDelegate{
     }
 }
 
+
+// MARK: - RSSFeedsViewModelDelegate
 extension RSSFeedsViewController: RSSFeedsViewModelDelegate {
     func feedsLayoutDidChanged(toType feedsLayoutStyle:FeedsLayoutStyle){
         
@@ -221,6 +241,8 @@ extension RSSFeedsViewController: RSSFeedsViewModelDelegate {
     }
 }
 
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 // Configure collection view items by defining collection view's delegate & datasource functions
 extension RSSFeedsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
