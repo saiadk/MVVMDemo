@@ -27,5 +27,15 @@ This sample code uses the following things:
 
 
 
+# TODO:
 
+1.  Create model schema in CoreData & add APIs to store & retrieve feeds data in offline.
+
+2.  Add settings bundle and accept RSS feed type preferences like, US Top 100 Movies, US Top 100 Novels, Indian Top 100 music albums etc.
+
+3.  Create a Dyanmic Framework and redesign RSS Feeds as a fully reusable UI component.
+
+4.  RxSwift
+
+5. Dynamic Content Management and Localization & Internationalization.
 
